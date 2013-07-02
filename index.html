@@ -72,5 +72,17 @@
 
   <script src="javascripts/jquery.js"></script>
   <script src="javascripts/leaflet.js"></script>
+  <script>
+    $(document).ready(function() {
+      var map = L.map('map', {
+            center: [51.07993, -114.131802],
+            zoom: 3
+      });
+
+      L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+          attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+      }).addTo(map);
+    }());
+  </script>
 </body>
 </html>
