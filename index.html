@@ -116,6 +116,29 @@
           $("#custom-source").hide();
         }
       });
+
+      $("#add-source").on("click", function(e) {
+        var $selection = $("#source").children(":selected"),
+            source;
+
+        if ($selection.attr('id') === "other-source") {
+          // Use manual input
+          source = {
+            service_url: $("#service_url").val(),
+            offering:    $("#offering").val(),
+            property:    $("#property").val()
+          };
+        } else {
+          // read from data attributes
+          source = {
+            service_url: $selection.data("service-url"),
+            offering:    $selection.data("offering"),
+            property:    $selection.data("property")
+          };
+        }
+
+        $("#chooser").hide();
+      });
     }());
   </script>
 </body>
