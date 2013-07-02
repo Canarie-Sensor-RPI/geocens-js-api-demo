@@ -16,7 +16,6 @@
     #map {
       height: 600px;
       width: 100%;
-      background-color: blue;
     }
 
     #chooser {
@@ -76,7 +75,18 @@
   <script src="javascripts/jquery.js"></script>
   <script src="javascripts/leaflet.js"></script>
   <script>
+    var $window = $(window),
+        $map    = $("#map");
+
+    var autosize = function () {
+      $map.height($window.height());
+    };
+
+    $window.resize(autosize);
+
     $(document).ready(function() {
+      autosize();
+
       var map = L.map('map', {
             center: [51.07993, -114.131802],
             zoom: 3
