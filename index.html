@@ -1,8 +1,68 @@
 <html>
 <head>
   <title>GeoCENS JS API Demo</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+    }
+
+    #map {
+      height: 600px;
+      width: 100%;
+      background-color: blue;
+    }
+
+    #chooser {
+      position: absolute;
+      top: 4em;
+      right: 30%;
+      left: 30%;
+      background-color: white;
+      border: 1px solid #888;
+      padding: 1em;
+    }
+
+    #custom_buttons {
+      position: absolute;
+      top: 1em;
+      right: 1em;
+      z-index: 50;
+    }
+  </style>
 </head>
 <body>
+  <div id="chooser">
+    <h1>Select a Data Source</h1>
+    <p>
+      <select id="source">
+        <option>Other&hellip;</option>
+      </select>
+    </p>
 
+    <div id="custom-source">
+      <p>
+        <label for="service_url">Service URL</label><br />
+        <input type="text" id="service_url" name="service_url" />
+      </p>
+      <p>
+        <label for="offering">SOS Offering</label><br />
+        <input type="text" id="offering" name="offering" />
+      </p>
+      <p>
+        <label for="property">SOS Observed Property</label><br />
+        <input type="text" id="property" name="property" />
+      </p>
+    </div>
+
+    <button id="add-source">Add to Map</button>
+  </div>
+
+  <div id="custom_buttons">
+    <button>Add Data</button>
+  </div>
+
+  <div id="map">
+  </div>
 </body>
 </html>
