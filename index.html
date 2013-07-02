@@ -21,6 +21,11 @@
       width: 100%;
     }
 
+    #chart {
+      width: 500px;
+      height: 400px;
+    }
+
     #chooser {
       position: absolute;
       top: 4em;
@@ -104,6 +109,7 @@
           mapObservations,
           markers,
           loadData,
+          drawChart,
           layers = [];
 
       autosize();
@@ -120,8 +126,40 @@
           attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
       }).addTo(map);
 
+      drawChart = function(seriesData, observation) {
+        $("#loader").hide();
+        var chart = $("#chart").GeocensChart({
+          observation: observation,
+          chart: {
+            rangeSelector: {
+              buttons: []
+            }
+          }
+        });
+      };
+
       mapObservations = function(observations) {
-        var layer = L.geocens(observations);
+        var layer = L.geocens(observations, {
+          popup: {
+            maxWidth: 800
+          },
+
+          popupContent: function(datasource, event, marker) {
+            var content = $("<div></div>"),
+                nameHeading = $("<h1></h1>").text(datasource.name()),
+                chart = $("<div></div>").attr('id', 'chart'),
+                loading = $("<p></p>").attr('id', 'loader').html("Loading&hellip;");
+
+            datasource.getTimeSeries({
+              start: new Date("2011-06-01T00:00:00Z"),
+              end:   new Date("2012-01-01T00:00:00Z"),
+              done:  drawChart
+            });
+
+            return content.append(nameHeading).append(chart).append(loading)[0];
+          }
+        });
+
         layers.push(layer);
         markers.addLayer(layer);
 
