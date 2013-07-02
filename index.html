@@ -104,6 +104,16 @@
           attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
       }).addTo(map);
 
+      var mapObservations = function(observations) {
+        L.geocens(observations).addTo(map);
+      };
+
+      var loadData = function(source) {
+        var options = $.extend({}, source, {
+          done: mapObservations
+        });
+        Geocens.SOS.getObservation(options);
+      };
 
       $("#toggle_chooser").on("click", function(e) {
         $("#chooser").toggle();
@@ -137,6 +147,8 @@
             property:    $selection.data("property")
           };
         }
+
+        loadData(source);
 
         $("#chooser").hide();
       });
