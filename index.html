@@ -30,6 +30,10 @@
       display: none;
     }
 
+    #custom-source {
+      display: none;
+    }
+
     #custom_buttons {
       position: absolute;
       top: 1em;
@@ -44,7 +48,7 @@
     <p>
       <select id="source">
         <option data-service-url="http://app.geocens.ca:8171/sos" data-offering="Temperature" data-property="urn:ogc:def:property:noaa:ndbc:Water Temperature">NOAA Water Temperature</option>
-        <option>Other&hellip;</option>
+        <option id="other-source">Other&hellip;</option>
       </select>
     </p>
 
@@ -100,6 +104,15 @@
 
       $("#toggle_chooser").on("click", function(e) {
         $("#chooser").toggle();
+      });
+
+      $("#source").on("change", function(e) {
+        var $selection = $(this).children(":selected");
+        if ($selection.attr('id') === "other-source") {
+          $("#custom-source").show();
+        } else {
+          $("#custom-source").hide();
+        }
       });
     }());
   </script>
