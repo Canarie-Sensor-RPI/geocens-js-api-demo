@@ -72,6 +72,7 @@
 
   <div id="custom_buttons">
     <button id="toggle_chooser">Add Data</button>
+    <button id="clear">Clear Map</button>
   </div>
 
   <div id="map">
@@ -92,10 +93,15 @@
     $window.resize(autosize);
 
     $(document).ready(function() {
+      var map,
+          mapObservations,
+          loadData,
+          layers = [];
+
       autosize();
       L.Icon.Default.imagePath = 'images';
 
-      var map = L.map('map', {
+      map = L.map('map', {
             center: [51.07993, -114.131802],
             zoom: 3
       });
@@ -104,11 +110,13 @@
           attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
       }).addTo(map);
 
-      var mapObservations = function(observations) {
-        L.geocens(observations).addTo(map);
+      mapObservations = function(observations) {
+        var layer = L.geocens(observations);
+        layers.push(layer);
+        layer.addTo(map);
       };
 
-      var loadData = function(source) {
+      loadData = function(source) {
         var options = $.extend({}, source, {
           done: mapObservations
         });
@@ -151,6 +159,12 @@
         loadData(source);
 
         $("#chooser").hide();
+      });
+
+      $("#clear").on("click", function(e) {
+        $.each(layers, function(index, layer) {
+          map.removeLayer(layer);
+        });
       });
     }());
   </script>
